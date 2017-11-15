@@ -1,6 +1,7 @@
 package com.example.wangsir.observerusedinproj.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,15 +9,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.wangsir.observerusedinproj.R;
+import com.example.wangsir.observerusedinproj.observer.ConcreatorSubject;
+import com.example.wangsir.observerusedinproj.observer.Observer;
 
 /**
  * Created by WangSir on 2017/11/14.
  */
 
-public class FivethFragment extends Fragment {
-    private static final String TAG = "FivethFragment";
+public class SecondFragment extends Fragment implements Observer{
+    private static final String TAG = "SecondFragment";
+    private View mView;
+    private LinearLayout mContainer;
 
     @Override
     public void onAttach(Context context) {
@@ -35,7 +41,23 @@ public class FivethFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         Log.e(TAG, "onCreateView");
-        return inflater.inflate(R.layout.fragment_text5,container,false);
+        mView = inflater.inflate(R.layout.fragment_text2, container, false);
+        mContainer = (LinearLayout) mView.findViewById(R.id.container2);
+        ConcreatorSubject instance = ConcreatorSubject.getInstance();
+        instance.addObserver(this);
+        return mView;
+    }
+
+
+    @Override
+    public void update(String color) {
+        if (color  == null){
+            Log.e(TAG,"color空");
+        }else{
+            Log.e(TAG,"color" + color);
+
+        }
+        mContainer.setBackgroundColor(Color.parseColor(color));
     }
 
     @Override

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ObserverUsedInProj.iml" filepath="$PROJECT_DIR$/ObserverUsedInProj.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/obser_theme/obser_theme.iml" filepath="$PROJECT_DIR$/obser_theme/obser_theme.iml" />
     </modules>
   </component>
 </project>

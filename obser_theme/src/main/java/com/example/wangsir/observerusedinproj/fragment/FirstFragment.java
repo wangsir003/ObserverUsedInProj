@@ -1,6 +1,7 @@
 package com.example.wangsir.observerusedinproj.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,15 +9,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.wangsir.observerusedinproj.R;
+import com.example.wangsir.observerusedinproj.observer.ConcreatorSubject;
+import com.example.wangsir.observerusedinproj.observer.Observer;
 
 /**
  * Created by WangSir on 2017/11/14.
  */
 
-public class ThirdFragment extends Fragment {
-    private static final String TAG = "ThirdFragment";
+public class FirstFragment extends Fragment implements Observer, View.OnClickListener {
+    private static final String TAG = "FirstFragment";
+    private View mView;
+    private Button mBtn;
+    private ConcreatorSubject instance;
+    private LinearLayout mContainer;
 
     @Override
     public void onAttach(Context context) {
@@ -35,8 +44,42 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         Log.e(TAG, "onCreateView");
-        return inflater.inflate(R.layout.fragment_text3,container,false);
+        mView = inflater.inflate(R.layout.fragment_text1, container, false);
+        mContainer = (LinearLayout) mView.findViewById(R.id.container1);
+        mBtn = mView.findViewById(R.id.btn_back_test);
+        mBtn.setOnClickListener(this);
+        instance = ConcreatorSubject.getInstance();
+        instance.addObserver(this);
+
+        return mView;
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_back_test:
+                instance.setColor("#ff0000");
+                instance.notifyObserver();
+
+                break;
+        }
+    }
+
+
+    @Override
+    public void update(String color) {
+        if (color  == null){
+            Log.e(TAG,"color空");
+        }else{
+            Log.e(TAG,"color" + color);
+
+        }
+        if (mView == null){
+            Log.e(TAG,"mView空");
+        }
+        mContainer.setBackgroundColor(Color.parseColor(color));
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -97,4 +140,6 @@ public class ThirdFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         Log.e(TAG, "setUserVisibleHint:" + isVisibleToUser);
     }
+
+
 }
